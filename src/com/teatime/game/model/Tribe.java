@@ -20,6 +20,9 @@ public class Tribe implements Actor {
 		humans = new ArrayList<Human>();
 		food = new ArrayList<Food>();
 		
+		gathererTech = new Tech();
+		hunterTech = new Tech();
+		
 		generateHumans();
 	}
 	
