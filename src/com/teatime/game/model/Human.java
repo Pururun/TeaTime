@@ -12,6 +12,7 @@ public class Human {
 	private Sex sex;  
 	private Craft currentCraft = null;
 	private Set<Craft> oldCrafts;
+	private boolean isPregnant;
 	
 	/**
 	 * 

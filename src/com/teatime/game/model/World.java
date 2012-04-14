@@ -38,7 +38,7 @@ public class World {
 		}
 	}
 	
-	public void simulateNext() {
+	public void simulateWorld() {
 		//TODO
 	}
 
