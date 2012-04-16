@@ -3,6 +3,8 @@ package com.teatime.game.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.teatime.game.model.com.Orders;
+
 public class World {
 	
 	private List<Tribe> tribes;
@@ -38,7 +40,7 @@ public class World {
 		}
 	}
 	
-	public void simulateWorld() {
+	public void simulateWorld(Orders orders) {
 		//TODO
 	}
 
