@@ -41,7 +41,9 @@ public class World {
 	}
 	
 	public void simulateWorld(Orders orders) {
-		//TODO
+		for ( Tribe t : tribes) {
+			t.simulateNext(orders);
+		}
 	}
 
 }

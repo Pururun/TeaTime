@@ -1,7 +1,11 @@
 package com.teatime.game.model;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
+
+import com.teatime.game.model.com.Orders;
+import com.teatime.game.model.rules.Rules;
 
 public class Tribe implements Actor {
 	
@@ -10,8 +14,7 @@ public class Tribe implements Actor {
 	
 	private List<Province> ownedProvinces;
 	
-	private Tech gathererTech;
-	private Tech hunterTech;
+	private List<Tech> techs;
 	
 	
 	public Tribe(List<Province> provinces) {
@@ -20,9 +23,11 @@ public class Tribe implements Actor {
 		humans = new ArrayList<Human>();
 		food = new ArrayList<Food>();
 		
-		gathererTech = new Tech();
-		hunterTech = new Tech();
+		techs = new ArrayList<Tech>();
+		techs.add(new GathererTech());
+		techs.add(new HunterTech());
 		
+		//Start up tribe
 		generateHumans();
 	}
 	
@@ -31,8 +36,58 @@ public class Tribe implements Actor {
 	}
 	
 	@Override
-	public void simulateNext() {
+	public void simulateNext(Object data) {
 		
+		Orders orders = (Orders) data;
+		
+		//Set up humans and their tasks
+		setUpAssignments(orders);
+		
+		//Perform tasks
+		
+		//Simluate next
+		for ( Human h : humans ) {
+			h.simulateNext(this);
+		}
+		
+		//Clear dead people
+		Iterator<Human> it = humans.iterator();
+		while ( it.hasNext() ) {
+			Human h = it.next();
+			if ( !h.isAlive() ) {
+				it.remove();
+			}
+		}
+		
+		//If possible, make people pregnant
+		
+	}
+	
+	private void setUpAssignments(Orders orders) {
+		double percentageHunters = orders.percentageHunters;
+		double percentageGatherers = orders.percentageGatherers;
+		
+		List<Human> assignables = getListofAssignableHumans();
+	}
+	
+	private List<Human> getListofAssignableHumans() {
+		List<Human> assignables = new ArrayList<Human>();
+		
+		for ( Human h : humans ) {
+			if ( h.getAge() >= Rules.humanAdultAge && !h.isPregnant() ) {
+				assignables.add(h);
+			}
+		}
+		
+		return assignables;
+	}
+	
+	public void addHuman (Human human) {
+		humans.add(human);
+	}
+	
+	public int getNumberOfAssignableHumans() {
+		return getListofAssignableHumans().size();
 	}
 
 }

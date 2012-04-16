@@ -1,6 +1,6 @@
 package com.teatime.game.model;
 
-public class Tech {
+public abstract class Tech {
 	
 	private int level;
 	

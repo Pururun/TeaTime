@@ -4,15 +4,21 @@ import java.util.HashSet;
 import java.util.Random;
 import java.util.Set;
 
-public class Human {
+import com.teatime.game.model.rules.Rules;
+
+public class Human implements Actor {
 	
 	public enum Sex { Male, Female};
 	
+	//Note that internal and actual age is not the same...
 	private int age;
 	private Sex sex;  
 	private Craft currentCraft = null;
 	private Set<Craft> oldCrafts;
 	private boolean isPregnant;
+	private int starvation = 0;
+	private boolean isAlive;
+	private int foodToEat = 0;
 	
 	/**
 	 * 
@@ -25,6 +31,7 @@ public class Human {
 		this.age = age;
 		this.sex = sex;
 		oldCrafts = new HashSet<Craft>();
+		isAlive = true;
 	}
 	
 	/**
@@ -41,6 +48,8 @@ public class Human {
 			sex = Sex.Female;
 		}
 		oldCrafts = new HashSet<Craft>();
+		
+		isAlive = true;
 	}
 	
 	public void assignCraft(Craft craft) {
@@ -56,6 +65,80 @@ public class Human {
 		if ( currentCraft == null ) {
 			currentCraft = craft.createCraft();
 		}
+	}
+	
+	public void makePregnant() {
+		if ( sex == Sex.Female ) {
+			isPregnant = true;
+		}
+	}
+	
+	public boolean isPregnant() {
+		return isPregnant;
+	}
+	
+	public int getAge() {
+		return age/Rules.turnsPerYear;
+	}
+
+	@Override
+	public void simulateNext(Object data) {
+		
+		Tribe tribe = (Tribe) data;
+		
+		age++;
+		
+		//Check for starvation
+		if ( !hasEatenFull() ) {
+			starvation++;
+		}
+		
+		if ( starvation >= Rules.starvationLimit ) {
+			this.kill();
+		}
+		
+		//Check for old age
+		if ( getAge() >= Rules.humanOldAge ) {
+			this.kill();
+		}
+		
+		//Increase experience
+		if ( currentCraft != null ) {
+			currentCraft.increaseExperience(tribe);
+		}
+		
+		//Make hungry again
+		if ( getAge() >= Rules.humanAdultAge ) {
+			foodToEat = Rules.humanAdultEat;
+		} else {
+			foodToEat = Rules.humanChildEat;
+		}
+		
+		//Give birth
+		if ( isPregnant() ) {
+			tribe.addHuman(new Human());
+		}
+	}
+	
+	public boolean eat(Food food) {	
+		
+		foodToEat -= food.eat(foodToEat);
+		
+		return hasEatenFull();
+	}
+	
+	public boolean hasEatenFull() {
+		return foodToEat <= 0;
+	}
+	
+	public void kill() {
+		isAlive = false;
+		currentCraft = null;
+		oldCrafts = null;
+	}
+	
+	public boolean isAlive() {
+		return isAlive;
 	}
 	
 

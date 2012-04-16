@@ -2,6 +2,6 @@ package com.teatime.game.model;
 
 public interface Actor {
 	
-	public void simulateNext();
+	public void simulateNext(Object data);
 
 }

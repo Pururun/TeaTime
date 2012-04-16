@@ -7,4 +7,10 @@ public class Hunter extends Craft {
 		return new Hunter();
 	}
 
+	@Override
+	public void increaseExperience(Tribe tribe) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }
