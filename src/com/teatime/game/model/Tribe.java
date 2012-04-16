@@ -35,7 +35,6 @@ public class Tribe implements Actor {
 		
 	}
 	
-	@Override
 	public void simulateNext(Object data) {
 		
 		Orders orders = (Orders) data;

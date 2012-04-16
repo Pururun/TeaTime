@@ -81,7 +81,6 @@ public class Human implements Actor {
 		return age/Rules.turnsPerYear;
 	}
 
-	@Override
 	public void simulateNext(Object data) {
 		
 		Tribe tribe = (Tribe) data;
