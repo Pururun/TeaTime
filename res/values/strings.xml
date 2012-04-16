@@ -3,5 +3,7 @@
 
     <string name="hello">Hello World, HomeActivity!</string>
     <string name="app_name">TeaTime</string>
-
+    <string name="new_game">New Game</string>
+	<string name="quit">Quit</string>
+	
 </resources>
