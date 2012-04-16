@@ -12,9 +12,11 @@ public class Rules {
 	public final static int humanChildEat = 1;
 	public final static int starvationLimit = 2;
 	
-	public static int gatherFood() {
-		return 0;
-		//TODO
+	/* FOOD */
+	public final static int foodAgeTurns = 3;
+	
+	public static int gatherFood(int size, int tech, int exp) {
+		return size * tech * exp;
 	}
 	
 	public static int hunt() {

@@ -2,13 +2,15 @@ package com.teatime.game.model;
 
 public abstract class Tech {
 	
-	private int level;
+	protected int level;
 	
-	private int progress;
+	protected int progress;
 	
 	public Tech() {
 		progress = 0;
 		level = 0;
 	}
+	
+	public abstract int getSkill();
 
 }

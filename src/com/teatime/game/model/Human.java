@@ -102,11 +102,6 @@ public class Human implements Actor {
 			this.kill();
 		}
 		
-		//Increase experience
-		if ( currentCraft != null ) {
-			currentCraft.increaseExperience(tribe);
-		}
-		
 		//Make hungry again
 		if ( getAge() >= Rules.humanAdultAge ) {
 			foodToEat = Rules.humanAdultEat;
@@ -139,6 +134,10 @@ public class Human implements Actor {
 	
 	public boolean isAlive() {
 		return isAlive;
+	}
+	
+	public Craft getCurrentCraft() {
+		return currentCraft;
 	}
 	
 
