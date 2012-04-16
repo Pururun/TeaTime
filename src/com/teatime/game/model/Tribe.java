@@ -1,6 +1,7 @@
 package com.teatime.game.model;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -50,6 +51,10 @@ public class Tribe implements Actor {
 		performTasks();
 		
 		//Feed people
+		feedHumans();
+		
+		//Age food
+		
 		
 		//Simluate next
 		for ( Human h : humans ) {
@@ -130,6 +135,10 @@ public class Tribe implements Actor {
 		} else {
 			return null;
 		}
+	}
+	
+	private void feedHumans() {
+		Collections.sort(humans, new FoodSorter());
 	}
 	
 	public void addHuman (Human human) {

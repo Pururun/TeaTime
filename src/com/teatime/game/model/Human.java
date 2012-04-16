@@ -140,5 +140,9 @@ public class Human implements Actor {
 		return currentCraft;
 	}
 	
+	public double getFoodScore() {
+		return currentCraft.getExperience() * currentCraft.getValue();
+	}
+	
 
 }

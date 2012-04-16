@@ -2,6 +2,8 @@ package com.teatime.game.model;
 
 import java.util.List;
 
+import com.teatime.game.model.rules.Rules;
+
 public class Hunter extends Craft {
 
 	@Override
@@ -25,6 +27,11 @@ public class Hunter extends Craft {
 	public Food performFoodCraft(List<Human> humans, Tech tech) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public double getValue() {
+		return Rules.hunterValue;
 	}
 
 }
