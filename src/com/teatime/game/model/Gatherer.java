@@ -37,4 +37,9 @@ public class Gatherer extends Craft {
 		return new Food(Rules.gatherFood(size, exp, tech.getSkill()), 0, Rules.foodAgeTurns);
 	}
 
+	@Override
+	public double getValue() {
+		return Rules.gathererValue;
+	}
+
 }

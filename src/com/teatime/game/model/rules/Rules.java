@@ -12,6 +12,10 @@ public class Rules {
 	public final static int humanChildEat = 1;
 	public final static int starvationLimit = 2;
 	
+	/* CRAFTS */
+	public final static double gathererValue = 1.1;
+	public final static double hunterValue = 1.5;
+	
 	/* FOOD */
 	public final static int foodAgeTurns = 3;
 	

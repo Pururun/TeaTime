@@ -12,6 +12,8 @@ public abstract class Craft {
 	
 	public abstract boolean canPerformFoodCraft();
 	
+	public abstract double getValue();
+	
 	public abstract Food performFoodCraft(List<Human> humans, Tech tech);
 	
 	public int getExperience() {
