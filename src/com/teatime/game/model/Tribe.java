@@ -50,7 +50,9 @@ public class Tribe implements Actor {
 		performTasks();
 		
 		//Feed people
-		feedHumans();
+		
+		// TODO: implement
+//		feedHumans();
 		
 		//Age food
 		
@@ -136,9 +138,10 @@ public class Tribe implements Actor {
 		}
 	}
 	
-	private void feedHumans() {
-		Collections.sort(humans, new FoodSorter());
-	}
+	// TODO: implement
+//	private void feedHumans() {
+//		Collections.sort(humans, new FoodSorter());
+//	}
 	
 	public void addHuman (Human human) {
 		humans.add(human);
