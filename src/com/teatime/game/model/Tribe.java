@@ -54,8 +54,13 @@ public class Tribe implements Actor {
 		feedHumans();
 		
 		//Age food and remove old food
-		for ( Food f : food ) {
+		Iterator<Food> itFood = food.iterator();
+		while ( itFood.hasNext() ) {
+			Food f = itFood.next();
 			f.age();
+			if ( f.isOld() ) {
+				itFood.remove();
+			}
 		}
 		
 		//Simluate next
@@ -85,10 +90,44 @@ public class Tribe implements Actor {
 	}
 	
 	private void setUpAssignments(Orders orders) {
-		double percentageHunters = orders.percentageHunters;
-		double percentageGatherers = orders.percentageGatherers;
-		
 		List<Human> assignables = getListofAssignableHumans();
+		
+		int nrOfHunters = (int) (assignables.size()*orders.percentageHunters);
+		int nrOfGatherers = (int) (assignables.size()*orders.percentageHunters);
+		
+		//Assign spares to the largest group
+		if ( assignables.size() > (nrOfHunters + nrOfGatherers) ) {
+			if ( nrOfHunters >= nrOfGatherers )  {
+				nrOfHunters += (assignables.size() - (nrOfHunters + nrOfGatherers));
+			} else {
+				nrOfGatherers += (assignables.size() - (nrOfHunters + nrOfGatherers));
+			}		 
+		}
+		
+		//Sort By Best Hunters
+		//Assign best hunters
+		Craft c = new Hunter();
+		Collections.sort(assignables, new AssignmentSorter(c));
+		Iterator<Human> it = assignables.iterator();
+		while ( it.hasNext() && nrOfHunters > 0 ) {
+			Human h = it.next();
+			h.assignCraft(c);
+			it.remove();
+			nrOfHunters--;
+		}
+		
+		//Sort By Best Gatherers
+		//Assign best gatherer
+		c = new Gatherer();
+		Collections.sort(assignables, new AssignmentSorter(c));
+		it = assignables.iterator();
+		while ( it.hasNext() && nrOfGatherers > 0 ) {
+			Human h = it.next();
+			h.assignCraft(c);
+			it.remove();
+			nrOfGatherers--;
+		}
+		
 	}
 	
 	private List<Human> getListofAssignableHumans() {
@@ -203,8 +242,34 @@ public class Tribe implements Actor {
 
 		@Override
 		public int compare(Human lhs, Human rhs) {
-			// TODO Auto-generated method stub
-			return 0;
+			if ( lhs.getPregnantScore() < rhs.getPregnantScore() ) {
+				return -1;
+			} else if ( lhs.getPregnantScore() > rhs.getPregnantScore() ) {
+				return 1;
+			} else {
+				return 0;
+			}
+		}
+		
+	}
+	
+	private class AssignmentSorter implements Comparator<Human> {
+		
+		Craft c;
+		
+		public AssignmentSorter(Craft c) {
+			this.c = c;
+		}
+
+		@Override
+		public int compare(Human lhs, Human rhs) {
+			if ( lhs.getCraftScore(c) < rhs.getCraftScore(c) ) {
+				return -1;
+			} else if ( lhs.getCraftScore(c) > rhs.getCraftScore(c) ) {
+				return 1;
+			} else {
+				return 0;
+			}
 		}
 		
 	}

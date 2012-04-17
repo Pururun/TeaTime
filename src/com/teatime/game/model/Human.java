@@ -43,7 +43,7 @@ public class Human implements Actor {
 	public Human () {
 		age = 0;
 		Random rand = new Random();
-		if ( rand.nextInt(1) > 0 ) {
+		if ( rand.nextInt(2) > 0 ) {
 			sex = Sex.Male;
 		} else {
 			sex = Sex.Female;
@@ -158,6 +158,49 @@ public class Human implements Actor {
 	
 	public boolean canBePregnant() {
 		return sex == Sex.Female && !isPregnant && getAge() >= Rules.humanAdultAge && starvation < 1;
+	}
+	
+	public double getCraftScore(Craft c) {		
+		if ( currentCraft.getClass() == c.getClass() ) {
+			return calculateCraftScore(c);
+		} else {
+			for ( Craft oldCraft : oldCrafts ) {
+				if ( oldCraft.getClass() == c.getClass() ) {
+					return calculateCraftScore(c);
+				}
+			}
+			return -1.0;
+		}
+	}
+	
+	private double calculateCraftScore(Craft c) {
+		
+		if ( isBestCraft(c) ) {
+			return c.getExperience();
+		} else {
+			return c.getExperience() * 0.6;
+		}
+		
+	}
+	
+	private boolean isBestCraft( Craft c ) {
+		return c.getClass() == getBestCraft().getClass();
+	}
+	
+	public Craft getBestCraft() {
+		Craft bestCraft = currentCraft;
+		
+		for ( Craft oldCraft : oldCrafts ) {
+			if ( bestCraft == null || bestCraft.getExperience() < oldCraft.getExperience() ) {
+				bestCraft = oldCraft;
+			}
+		}
+		
+		if ( bestCraft != null ) {
+			return bestCraft;
+		} else {
+			return new Gatherer();
+		}
 	}
 	
 
