@@ -9,6 +9,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import android.util.Log;
+
 import com.teatime.game.model.com.Orders;
 import com.teatime.game.model.rules.Rules;
 
@@ -25,6 +27,8 @@ public class Tribe implements Actor {
 	private List<Tech> techs;
 	
 	private final String name;
+	
+	private List<Human> newBorns;
 	
 	public Tribe(List<Province> provinces, Province homeProvince, String name) {
 		ownedProvinces = provinces;
@@ -45,6 +49,46 @@ public class Tribe implements Actor {
 	
 	private void generateHumans() {
 		
+		humans.add(new Human(22, Human.Sex.Male));
+		humans.add(new Human(11, Human.Sex.Male));
+		humans.add(new Human(35, Human.Sex.Male));
+		humans.add(new Human(36, Human.Sex.Male));
+		humans.add(new Human(40, Human.Sex.Male));
+		humans.add(new Human(45, Human.Sex.Male));
+		humans.add(new Human(9, Human.Sex.Male));
+		humans.add(new Human(23, Human.Sex.Male));
+		humans.add(new Human(7, Human.Sex.Male));
+		humans.add(new Human(5, Human.Sex.Male));
+		humans.add(new Human(1, Human.Sex.Male));
+		humans.add(new Human(9, Human.Sex.Male));
+		humans.add(new Human(29, Human.Sex.Male));
+		humans.add(new Human(31, Human.Sex.Male));
+		humans.add(new Human(56, Human.Sex.Male));
+		humans.add(new Human(15, Human.Sex.Male));
+		humans.add(new Human(40, Human.Sex.Male));
+		humans.add(new Human(19, Human.Sex.Male));
+		humans.add(new Human(21, Human.Sex.Male));
+		
+		humans.add(new Human(22, Human.Sex.Female));
+		humans.add(new Human(11, Human.Sex.Female));
+		humans.add(new Human(35, Human.Sex.Female));
+		humans.add(new Human(36, Human.Sex.Female));
+		humans.add(new Human(40, Human.Sex.Female));
+		humans.add(new Human(45, Human.Sex.Female));
+		humans.add(new Human(9, Human.Sex.Female));
+		humans.add(new Human(23, Human.Sex.Female));
+		humans.add(new Human(7, Human.Sex.Female));
+		humans.add(new Human(5, Human.Sex.Female));
+		humans.add(new Human(1, Human.Sex.Female));
+		humans.add(new Human(9, Human.Sex.Female));
+		humans.add(new Human(29, Human.Sex.Female));
+		humans.add(new Human(31, Human.Sex.Female));
+		humans.add(new Human(56, Human.Sex.Female));
+		humans.add(new Human(15, Human.Sex.Female));
+		humans.add(new Human(40, Human.Sex.Female));
+		humans.add(new Human(19, Human.Sex.Female));
+		humans.add(new Human(21, Human.Sex.Female));
+		
 	}
 	
 	public void simulateNext(Object data) {
@@ -61,6 +105,7 @@ public class Tribe implements Actor {
 		feedHumans();
 		
 		//Age food and remove old food
+		Log.e("Clear food", "We are here");
 		Iterator<Food> itFood = food.iterator();
 		while ( itFood.hasNext() ) {
 			Food f = itFood.next();
@@ -71,11 +116,20 @@ public class Tribe implements Actor {
 		}
 		
 		//Simluate next
+		Log.e("Simulate next", "We are here");
 		for ( Human h : humans ) {
 			h.simulateNext(this);
 		}
 		
+		//Add newborns to humans
+		Log.e("Add newborns", "We are here");
+		if ( newBorns != null ) {
+			humans.addAll(newBorns);
+			newBorns.clear();
+		}
+		
 		//Clear dead people
+		Log.e("Clear dead people", "We are here");
 		Iterator<Human> it = humans.iterator();
 		while ( it.hasNext() ) {
 			Human h = it.next();
@@ -86,12 +140,15 @@ public class Tribe implements Actor {
 		
 		//If possible, make people pregnant
 		int newChildren = getNumberOfNewChildren();
+		Log.e("Make Pregnant", "newChildren: " + newChildren + " population: " + humans.size());
 		Collections.sort(humans, new PregnantSorter());
+		Log.e("Make Pregnant", "first: " + humans.get(0) + " canBePregnant: " + humans.get(0).canBePregnant());
 		for ( int i = 0; i < newChildren; i++ ) {
 			Human h = humans.get(i);
 			if ( !h.canBePregnant() ) {
 				break;
 			}
+			h.makePregnant();
 		}
 		
 	}
@@ -101,6 +158,8 @@ public class Tribe implements Actor {
 		
 		int nrOfHunters = (int) (assignables.size()*orders.percentageHunters);
 		int nrOfGatherers = (int) (assignables.size()*orders.percentageHunters);
+		
+		Log.e("setUpAssignments: ", "hunters: " + nrOfHunters + " gatherers: " + nrOfGatherers);
 		
 		//Assign spares to the largest group
 		if ( assignables.size() > (nrOfHunters + nrOfGatherers) ) {
@@ -133,8 +192,7 @@ public class Tribe implements Actor {
 			h.assignCraft(c);
 			it.remove();
 			nrOfGatherers--;
-		}
-		
+		}		
 	}
 	
 	private List<Human> getListofAssignableHumans() {
@@ -153,6 +211,8 @@ public class Tribe implements Actor {
 		
 		Map<Craft, List<Human>> craftsMap = calculateCraft();
 		Set<Craft> crafts = craftsMap.keySet();
+		
+		Log.e("performTasks", "crafts: " + crafts.size() + " craftsMap.get()" + craftsMap.get(new Hunter()));
 		
 		for ( Craft craft : crafts ) {
 			if ( craft.canPerformFoodCraft() ) {
@@ -195,13 +255,13 @@ public class Tribe implements Actor {
 	
 	private void feedHumans() {
 		Collections.sort(humans, new FoodSorter());
-		
-		for ( Human h : humans ) {
-			Food eatableFood = getFirstNonEmptyFood();
-			if ( eatableFood == null ) {
-				break;
-			} else {
-				while ( !h.hasEatenFull() ) {
+
+		for (Human h : humans) {
+			while (!h.hasEatenFull()) {
+				Food eatableFood = getFirstNonEmptyFood();
+				if (eatableFood == null) {
+					break;
+				} else {
 					h.eat(eatableFood);
 				}
 			}
@@ -248,9 +308,9 @@ public class Tribe implements Actor {
 	private class PregnantSorter implements Comparator<Human> {
 
 		public int compare(Human lhs, Human rhs) {
-			if ( lhs.getPregnantScore() < rhs.getPregnantScore() ) {
+			if ( lhs.getPregnantScore() > rhs.getPregnantScore() ) {
 				return -1;
-			} else if ( lhs.getPregnantScore() > rhs.getPregnantScore() ) {
+			} else if ( lhs.getPregnantScore() < rhs.getPregnantScore() ) {
 				return 1;
 			} else {
 				return 0;
@@ -268,9 +328,9 @@ public class Tribe implements Actor {
 		}
 
 		public int compare(Human lhs, Human rhs) {
-			if ( lhs.getCraftScore(c) < rhs.getCraftScore(c) ) {
+			if ( lhs.getCraftScore(c) > rhs.getCraftScore(c) ) {
 				return -1;
-			} else if ( lhs.getCraftScore(c) > rhs.getCraftScore(c) ) {
+			} else if ( lhs.getCraftScore(c) < rhs.getCraftScore(c) ) {
 				return 1;
 			} else {
 				return 0;
@@ -308,5 +368,12 @@ public class Tribe implements Actor {
 		return null;
 	}
 	
-
+	public void addNewBorn(Human human) {
+		if ( newBorns == null ) {
+			newBorns = new ArrayList<Human>();
+		}
+		
+		newBorns.add(human);
+	}
 }
+
