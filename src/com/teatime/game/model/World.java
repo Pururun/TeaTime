@@ -45,5 +45,14 @@ public class World {
 			t.simulateNext(orders);
 		}
 	}
+	
+	public Tribe getTribe(String name) {
+		for ( Tribe t : tribes ) {
+			if ( t.getName().equals(name) ) {
+				return t;
+			}
+		}
+		return null;
+	}
 
 }

@@ -21,8 +21,10 @@ public class Tribe implements Actor {
 	
 	private List<Tech> techs;
 	
+	private final String name;
 	
-	public Tribe(List<Province> provinces) {
+	
+	public Tribe(List<Province> provinces, String name) {
 		ownedProvinces = provinces;
 		
 		humans = new ArrayList<Human>();
@@ -31,6 +33,8 @@ public class Tribe implements Actor {
 		techs = new ArrayList<Tech>();
 		techs.add(new GathererTech());
 		techs.add(new HunterTech());
+		
+		this.name = name;
 		
 		//Start up tribe
 		generateHumans();
@@ -272,6 +276,35 @@ public class Tribe implements Actor {
 			}
 		}
 		
+	}
+	
+	public String getName() {
+		return name;
+	}
+	
+	public int getPopulation() {
+		return humans.size();
+	}
+	
+	public int getNumberOfAdults() {
+		int adults = 0;
+		for ( Human h : humans ) {
+			if ( h.getAge() >= Rules.humanAdultAge ) {
+				adults++;
+			}
+		}
+		
+		return adults;
+	}
+	
+	public Tech getTech(Tech t) {
+		for ( Tech tribeTech : techs ) {
+			if ( tribeTech.getClass() == t.getClass() ) {
+				return tribeTech;
+			}
+		}
+		
+		return null;
 	}
 	
 

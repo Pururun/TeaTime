@@ -26,6 +26,7 @@ public class GameMainActivity extends TabActivity {
 	    tabHost.addTab(spec);
 
 	    intent = new Intent().setClass(this, StatsViewActivity.class);
+	    intent.putExtra("tribeName", "Player");
 	    spec = tabHost.newTabSpec("Stats").setIndicator("Stats",
 	                      res.getDrawable(R.drawable.tab_game_main))
 	                  .setContent(intent);
