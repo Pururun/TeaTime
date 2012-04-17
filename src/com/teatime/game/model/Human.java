@@ -29,7 +29,7 @@ public class Human implements Actor {
 	 * @param sex
 	 */
 	public Human (int age, Sex sex) {
-		this.age = age;
+		this.age = age*Rules.turnsPerYear;
 		this.sex = sex;
 		oldCrafts = new HashSet<Craft>();
 		isAlive = true;
@@ -54,7 +54,9 @@ public class Human implements Actor {
 	}
 	
 	public void assignCraft(Craft craft) {
-		oldCrafts.add(currentCraft);
+		if ( currentCraft != null ) {
+			oldCrafts.add(currentCraft);
+		}
 		currentCraft = null;
 
 		for (Craft newCraft : oldCrafts) {
@@ -111,7 +113,8 @@ public class Human implements Actor {
 		
 		//Give birth
 		if ( isPregnant() ) {
-			tribe.addHuman(new Human());
+			tribe.addNewBorn(new Human());
+			isPregnant = false;
 		}
 	}
 	
@@ -161,7 +164,7 @@ public class Human implements Actor {
 	}
 	
 	public double getCraftScore(Craft c) {		
-		if ( currentCraft.getClass() == c.getClass() ) {
+		if ( currentCraft != null && currentCraft.getClass() == c.getClass() ) {
 			return calculateCraftScore(c);
 		} else {
 			for ( Craft oldCraft : oldCrafts ) {
