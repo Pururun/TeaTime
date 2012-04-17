@@ -25,8 +25,6 @@ public class StatsViewActivity extends BaseActivity {
         } else {
         	tribe = World.getWorld().getTribe("SuperTribe");
         }
-        
-        setUpStats();
     }
 	
 	private void setUpStats() {
@@ -47,5 +45,12 @@ public class StatsViewActivity extends BaseActivity {
 		
 		TextView gathererTech = (TextView) findViewById(R.id.gatherer_tech_data);
 		gathererTech.setText("" + tribe.getTech(new GathererTech()).getLevel());
+	}
+	
+	@Override
+	protected void onResume() {
+		super.onResume();
+		
+		setUpStats();
 	}
 }
