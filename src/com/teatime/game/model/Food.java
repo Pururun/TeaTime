@@ -8,6 +8,9 @@ public class Food {
 	
 	private int age;
 	
+	public final static int TYPE_MEAT = 0;
+	public final static int TYPE_GATHER_FOOD = 1;
+	
 	public Food (int amount, int type, int age) {
 		this.amount = amount;
 		this.type = type;

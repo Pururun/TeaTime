@@ -1,5 +1,7 @@
 package com.teatime.game.model.rules;
 
+import java.util.Random;
+
 public class Rules {
 	
 	/* GLOBAL */
@@ -23,9 +25,9 @@ public class Rules {
 		return size * tech * exp;
 	}
 	
-	public static int hunt() {
-		return 0;
-		//TODO
+	public static int hunt(int size, int tech, int exp) {
+		Random rand = new Random();
+		return (size + rand.nextInt(10)) * tech * exp;
 	}
 
 }

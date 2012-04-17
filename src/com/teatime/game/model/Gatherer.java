@@ -13,8 +13,7 @@ public class Gatherer extends Craft {
 
 	@Override
 	public void increaseExperience(Tribe tribe) {
-		// TODO Auto-generated method stub
-		
+		experience++;
 	}
 
 	@Override
@@ -32,9 +31,13 @@ public class Gatherer extends Craft {
 		int exp = 0;
 		for ( Human h : humans ) {
 			exp += h.getCurrentCraft().getExperience();
+			h.getCurrentCraft().increaseExperience(null);
 		}
 		
-		return new Food(Rules.gatherFood(size, exp, tech.getSkill()), 0, Rules.foodAgeTurns);
+		//Increase tech
+		tech.progress += exp;
+		
+		return new Food(Rules.gatherFood(size, exp, tech.getSkill()), Food.TYPE_GATHER_FOOD, Rules.foodAgeTurns);
 	}
 
 	@Override
