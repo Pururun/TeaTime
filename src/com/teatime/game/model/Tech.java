@@ -8,7 +8,7 @@ public abstract class Tech {
 	
 	public Tech() {
 		progress = 0;
-		level = 1;
+		level = 0;
 	}
 	
 	public abstract int getSkill();
