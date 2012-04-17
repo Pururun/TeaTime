@@ -17,7 +17,7 @@
 
         <TableRow
             android:id="@+id/tableRow1"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="15dp" >
             
@@ -29,13 +29,14 @@
             <TextView android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:id="@+id/population_data"/>
+            android:id="@+id/population_data"
+            android:layout_marginLeft="15dp"/>
             
         </TableRow>
 
         <TableRow
             android:id="@+id/tableRow2"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="15dp" >
             
@@ -53,7 +54,7 @@
 
         <TableRow
             android:id="@+id/tableRow3"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="15dp" >
             
@@ -65,13 +66,14 @@
             <TextView android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:id="@+id/adults_data"/>
+            android:id="@+id/adults_data"
+            android:layout_marginLeft="15dp"/>
             
         </TableRow>
 
         <TableRow
             android:id="@+id/tableRow4"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="15dp" >
             
@@ -83,13 +85,14 @@
             <TextView android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:id="@+id/hunter_tech_data"/>
+            android:id="@+id/hunter_tech_data"
+            android:layout_marginLeft="15dp"/>
             
         </TableRow>
         
         <TableRow
             android:id="@+id/tableRow5"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="15dp" >
             
@@ -100,8 +103,9 @@
             
             <TextView android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:id="@+id/gatherer_tech_data"/>
+            android:layout_gravity="center_vertical"
+            android:id="@+id/gatherer_tech_data"
+            android:layout_marginLeft="15dp"/>
             
         </TableRow>
     </TableLayout>
