@@ -34,18 +34,18 @@ public class StatsViewActivity extends BaseActivity {
 		title.setText(tribe.getName());
 		
 		TextView population = (TextView) findViewById(R.id.population_data);
-		population.setText(tribe.getPopulation());
+		population.setText("" + tribe.getPopulation());
 		
 		TextView food = (TextView) findViewById(R.id.food_data);
-		food.setText(tribe.getStoredFood());
+		food.setText("" + tribe.getStoredFood());
 		
 		TextView adults = (TextView) findViewById(R.id.adults_data);
-		adults.setText(tribe.getNumberOfAdults());
+		adults.setText("" + tribe.getNumberOfAdults());
 		
 		TextView hunterTech = (TextView) findViewById(R.id.hunter_tech_data);
-		hunterTech.setText(tribe.getTech(new HunterTech()).getLevel());
+		hunterTech.setText("" + tribe.getTech(new HunterTech()).getLevel());
 		
 		TextView gathererTech = (TextView) findViewById(R.id.gatherer_tech_data);
-		gathererTech.setText(tribe.getTech(new GathererTech()).getLevel());
+		gathererTech.setText("" + tribe.getTech(new GathererTech()).getLevel());
 	}
 }

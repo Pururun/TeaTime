@@ -41,7 +41,7 @@ public class World {
 		Province homeProvince = newProvinces.get(homeProvinceIndex);
 		
 		// Create a single tribe
-		Tribe newTribe = new Tribe(newProvinces, homeProvince, "myTribe");
+		Tribe newTribe = new Tribe(newProvinces, homeProvince, "Player");
 		newTribes.add(newTribe);
 		
 		instance = new World(newTribes, newProvinces);
