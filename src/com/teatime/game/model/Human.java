@@ -11,6 +11,7 @@ public class Human implements Actor {
 	public enum Sex { Male, Female};
 	
 	//Note that internal and actual age is not the same...
+	//For the actual age us getAge()
 	private int age;
 	private Sex sex;  
 	private Craft currentCraft = null;
@@ -140,7 +141,23 @@ public class Human implements Actor {
 	}
 	
 	public double getFoodScore() {
-		return currentCraft.getExperience() * currentCraft.getValue();
+		if ( getAge() >= Rules.humanAdultAge && currentCraft != null )
+			return currentCraft.getExperience() * currentCraft.getValue();
+		else {
+			return getAge() - Rules.humanAdultAge;
+		}
+	}
+	
+	public double getPregnantScore() {
+		if ( canBePregnant() && currentCraft != null ) {
+			return currentCraft.getExperience();
+		} else {
+			return -1.0;
+		}
+	}
+	
+	public boolean canBePregnant() {
+		return sex == Sex.Female && !isPregnant && getAge() >= Rules.humanAdultAge && starvation < 1;
 	}
 	
 

@@ -2,6 +2,7 @@ package com.teatime.game.model;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -52,8 +53,10 @@ public class Tribe implements Actor {
 		//Feed people
 		feedHumans();
 		
-		//Age food
-		
+		//Age food and remove old food
+		for ( Food f : food ) {
+			f.age();
+		}
 		
 		//Simluate next
 		for ( Human h : humans ) {
@@ -70,6 +73,14 @@ public class Tribe implements Actor {
 		}
 		
 		//If possible, make people pregnant
+		int newChildren = getNumberOfNewChildren();
+		Collections.sort(humans, new PregnantSorter());
+		for ( int i = 0; i < newChildren; i++ ) {
+			Human h = humans.get(i);
+			if ( !h.canBePregnant() ) {
+				break;
+			}
+		}
 		
 	}
 	
@@ -138,6 +149,35 @@ public class Tribe implements Actor {
 	
 	private void feedHumans() {
 		Collections.sort(humans, new FoodSorter());
+		
+		for ( Human h : humans ) {
+			Food eatableFood = getFirstNonEmptyFood();
+			if ( eatableFood == null ) {
+				break;
+			} else {
+				while ( !h.hasEatenFull() ) {
+					h.eat(eatableFood);
+				}
+			}
+		}
+	}
+	
+	private Food getFirstNonEmptyFood() {
+		Iterator<Food> it = food.iterator();
+		while ( it.hasNext() ) {
+			Food f = it.next();
+			if ( f.getAmount() <= 0 ) {
+				it.remove();
+			} else {
+				return f;
+			}
+		}
+		
+		return null;
+	}
+	
+	private int getNumberOfNewChildren() {
+		return getStoredFood()/6;
 	}
 	
 	public void addHuman (Human human) {
@@ -146,6 +186,27 @@ public class Tribe implements Actor {
 	
 	public int getNumberOfAssignableHumans() {
 		return getListofAssignableHumans().size();
+	}
+	
+	public int getStoredFood() {
+		int storedFood = 0;
+		for ( Food f : food ) {
+			if ( !f.isOld() ) {
+				storedFood += f.getAmount();
+			}
+		}
+		
+		return storedFood;
+	}
+	
+	private class PregnantSorter implements Comparator<Human> {
+
+		@Override
+		public int compare(Human lhs, Human rhs) {
+			// TODO Auto-generated method stub
+			return 0;
+		}
+		
 	}
 	
 
