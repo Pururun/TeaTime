@@ -41,7 +41,7 @@ public class World {
 		Province homeProvince = newProvinces.get(homeProvinceIndex);
 		
 		// Create a single tribe
-		Tribe newTribe = new Tribe(newProvinces, homeProvince);
+		Tribe newTribe = new Tribe(newProvinces, homeProvince, "myTribe");
 		newTribes.add(newTribe);
 		
 		instance = new World(newTribes, newProvinces);
@@ -80,6 +80,15 @@ public class World {
 		for ( Tribe t : tribes) {
 			t.simulateNext(orders);
 		}
+	}
+	
+	public Tribe getTribe(String name) {
+		for ( Tribe t : tribes ) {
+			if ( t.getName().equals(name) ) {
+				return t;
+			}
+		}
+		return null;
 	}
 
 }

@@ -12,5 +12,9 @@ public abstract class Tech {
 	}
 	
 	public abstract int getSkill();
+	
+	public int getLevel() {
+		return level;
+	}
 
 }

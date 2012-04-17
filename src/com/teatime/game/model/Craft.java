@@ -4,7 +4,7 @@ import java.util.List;
 
 public abstract class Craft {
 	
-	private int experience;
+	protected int experience;
 	
 	public abstract Craft createCraft();
 	
