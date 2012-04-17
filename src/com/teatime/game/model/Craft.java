@@ -4,7 +4,7 @@ import java.util.List;
 
 public abstract class Craft {
 	
-	protected int experience;
+	protected int experience = 1;
 	
 	public abstract Craft createCraft();
 	
@@ -18,6 +18,22 @@ public abstract class Craft {
 	
 	public int getExperience() {
 		return experience;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() == obj.getClass())
+			return true;
+		return false;
+	}
+	
+	@Override
+	public int hashCode() {
+		return getClass().hashCode();
 	}
 
 }
