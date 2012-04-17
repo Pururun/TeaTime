@@ -18,11 +18,15 @@ public class Tribe implements Actor {
 	
 	private List<Province> ownedProvinces;
 	
+	// Where the tribe resides
+	private Province homeProvince;
+	
 	private List<Tech> techs;
 	
 	
-	public Tribe(List<Province> provinces) {
+	public Tribe(List<Province> provinces, Province homeProvince) {
 		ownedProvinces = provinces;
+		this.homeProvince = homeProvince;
 		
 		humans = new ArrayList<Human>();
 		food = new ArrayList<Food>();

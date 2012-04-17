@@ -7,12 +7,14 @@ import android.os.Bundle;
 import android.widget.TabHost;
 
 import com.teatime.game.R;
+import com.teatime.game.model.World;
 
 public class GameMainActivity extends TabActivity {
 	public void onCreate(Bundle savedInstanceState) {
 	    super.onCreate(savedInstanceState);
 	    setContentView(R.layout.layout_game_main);
 
+	    // Create TabView
 	    Resources res = getResources();
 	    TabHost tabHost = getTabHost();
 	    TabHost.TabSpec spec;
@@ -38,5 +40,9 @@ public class GameMainActivity extends TabActivity {
 	    tabHost.addTab(spec);
 
 	    tabHost.setCurrentTab(1);
+	    
+	    
+	    // Create world
+	    World.createWorld(16);
 	}
 }
