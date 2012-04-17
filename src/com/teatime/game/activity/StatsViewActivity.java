@@ -46,6 +46,6 @@ public class StatsViewActivity extends BaseActivity {
 		hunterTech.setText(tribe.getTech(new HunterTech()).getLevel());
 		
 		TextView gathererTech = (TextView) findViewById(R.id.gatherer_tech_data);
-		hunterTech.setText(tribe.getTech(new GathererTech()).getLevel());
+		gathererTech.setText(tribe.getTech(new GathererTech()).getLevel());
 	}
 }
