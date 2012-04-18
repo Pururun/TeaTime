@@ -211,6 +211,10 @@ public class Tribe implements Actor {
 		}		
 	}
 	
+	public Province getHomeProvince() {
+		return homeProvince;
+	}
+	
 	private List<Human> getListofAssignableHumans() {
 		List<Human> assignables = new ArrayList<Human>();
 		

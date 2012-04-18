@@ -1,7 +1,6 @@
 package com.teatime.game.activity;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.TextView;
 
 import com.teatime.game.R;
@@ -14,6 +13,7 @@ public class StatsViewActivity extends BaseActivity {
 	
 	String tribeName;
 	
+	@Override
 	public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         

@@ -1,10 +1,7 @@
 package com.teatime.game.activity;
 
 import android.os.Bundle;
-import android.view.View;
 import android.widget.LinearLayout;
-import android.widget.TextView;
-
 import com.teatime.game.R;
 import com.teatime.game.model.World;
 import com.teatime.game.view.MapView;
@@ -14,6 +11,7 @@ public class MapActivity extends BaseActivity {
 	private World world;
 	private MapView mapView;
 	
+	@Override
 	public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_map);

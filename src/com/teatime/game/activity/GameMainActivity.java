@@ -10,6 +10,7 @@ import com.teatime.game.R;
 import com.teatime.game.model.World;
 
 public class GameMainActivity extends TabActivity {
+	@Override
 	public void onCreate(Bundle savedInstanceState) {
 	    super.onCreate(savedInstanceState);
 	    setContentView(R.layout.layout_game_main);
