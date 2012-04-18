@@ -2,7 +2,6 @@ package com.teatime.game.activity;
 
 import android.app.Dialog;
 import android.app.ProgressDialog;
-import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.Editable;

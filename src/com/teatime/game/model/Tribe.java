@@ -129,14 +129,12 @@ public class Tribe implements Actor {
 		
 		//Add newborns to humans
 		lastRoundResults.nrOfBirths = newBorns != null ? newBorns.size() : 0;
-		Log.e("Add newborns", "We are here");
 		if ( newBorns != null ) {
 			humans.addAll(newBorns);
 			newBorns.clear();
 		}
 		
 		//Clear dead people
-		Log.e("Clear dead people", "We are here");
 		Iterator<Human> it = humans.iterator();
 		while ( it.hasNext() ) {
 			Human h = it.next();
@@ -151,7 +149,6 @@ public class Tribe implements Actor {
 		int actualPregnantWomen = 0;
 		Log.e("Make Pregnant", "newChildren: " + newChildren + " population: " + humans.size());
 		Collections.sort(humans, new PregnantSorter());
-		Log.e("Make Pregnant", "first: " + humans.get(0) + " canBePregnant: " + humans.get(0).canBePregnant());
 		for ( int i = 0; i < newChildren; i++ ) {
 			Human h = humans.get(i);
 			if ( !h.canBePregnant() ) {

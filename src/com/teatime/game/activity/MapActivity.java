@@ -1,9 +1,7 @@
 package com.teatime.game.activity;
 
 import android.os.Bundle;
-import android.view.View;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import com.teatime.game.R;
 import com.teatime.game.model.World;
