@@ -2,6 +2,8 @@ package com.teatime.game.model;
 
 import java.util.List;
 
+import android.util.Log;
+
 import com.teatime.game.model.rules.Rules;
 
 public class Gatherer extends Craft {
@@ -13,7 +15,7 @@ public class Gatherer extends Craft {
 
 	@Override
 	public void increaseExperience(Tribe tribe) {
-		experience++;
+		experience+=Rules.gathererIncrease;
 	}
 
 	@Override
@@ -28,16 +30,21 @@ public class Gatherer extends Craft {
 		int size = humans.size();
 		
 		//Calculate experience
-		int exp = 0;
+		double exp = 0;
+		double bestExp = 0;
 		for ( Human h : humans ) {
 			exp += h.getCurrentCraft().getExperience();
+			bestExp = Math.max(bestExp, h.getCurrentCraft().getExperience());
 			h.getCurrentCraft().increaseExperience(null);
 		}
+		
+		//Add leadership bonus
+		exp += (bestExp * Rules.gathererLeadershipBonus);
 		
 		//Increase tech
 		tech.progress += exp;
 		
-		return new Food(Rules.gatherFood(size, exp, tech.getSkill()), Food.TYPE_GATHER_FOOD, Rules.foodAgeTurns);
+		return new Food(Rules.gatherFood(size, tech.getSkill(), exp), Food.TYPE_GATHER_FOOD, Rules.foodAgeTurns);
 	}
 
 	@Override

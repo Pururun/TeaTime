@@ -13,7 +13,7 @@ public class Hunter extends Craft {
 
 	@Override
 	public void increaseExperience(Tribe tribe) {
-		experience++;
+		experience+=Rules.hunterIncrease;
 	}
 
 	@Override
@@ -26,17 +26,22 @@ public class Hunter extends Craft {
 		// Calculate size
 		int size = humans.size();
 
-		// Calculate experience
-		int exp = 0;
+		// Calculate experience and leadership bonus
+		double exp = 0.0;
+		double bestExp = 0.0;
 		for (Human h : humans) {
 			exp += h.getCurrentCraft().getExperience();
+			bestExp = Math.max(bestExp, h.getCurrentCraft().getExperience());
 			h.getCurrentCraft().increaseExperience(null);
 		}
+		
+		//Add leadership bonus
+		exp += (bestExp * Rules.hunterLeadershipBonus);
 
 		// Increase tech
 		tech.progress += exp;
 		
-		return new Food(Rules.hunt(size, exp, tech.getSkill()), Food.TYPE_MEAT,
+		return new Food(Rules.hunt(size, tech.getSkill(), exp), Food.TYPE_MEAT,
 				Rules.foodAgeTurns);
 	}
 

@@ -4,7 +4,7 @@ import java.util.List;
 
 public abstract class Craft {
 	
-	protected int experience = 1;
+	protected double experience = 0.09;
 	
 	public abstract Craft createCraft();
 	
@@ -16,7 +16,7 @@ public abstract class Craft {
 	
 	public abstract Food performFoodCraft(List<Human> humans, Tech tech);
 	
-	public int getExperience() {
+	public double getExperience() {
 		return experience;
 	}
 

@@ -39,5 +39,10 @@ public class Food {
 	public int getAmount() {
 		return amount;
 	}
+	
+	@Override
+	public String toString() {
+		return "Food amount: " + amount + " age: " + age;
+	}
 
 }

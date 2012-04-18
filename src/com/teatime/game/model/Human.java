@@ -16,7 +16,8 @@ public class Human implements Actor {
 	private Sex sex;  
 	private Craft currentCraft = null;
 	private Set<Craft> oldCrafts;
-	private boolean isPregnant;
+	private int pregnantMonth = 0;
+	private boolean isPregnant = false;
 	private int starvation = 0;
 	private boolean isAlive;
 	private int foodToEat = 0;
@@ -33,6 +34,12 @@ public class Human implements Actor {
 		this.sex = sex;
 		oldCrafts = new HashSet<Craft>();
 		isAlive = true;
+		
+		if ( getAge() < Rules.humanAdultAge ) {
+			foodToEat = Rules.humanChildEat;
+		} else {
+			foodToEat = Rules.humanAdultEat;
+		}
 	}
 	
 	/**
@@ -72,7 +79,7 @@ public class Human implements Actor {
 	
 	public void makePregnant() {
 		if ( sex == Sex.Female ) {
-			isPregnant = true;
+			isPregnant = true;;
 		}
 	}
 	
@@ -111,10 +118,16 @@ public class Human implements Actor {
 			foodToEat = Rules.humanChildEat;
 		}
 		
-		//Give birth
+		//Increase pregnantMonth
 		if ( isPregnant() ) {
+			pregnantMonth += 12.0/Rules.turnsPerYear;
+		}
+		
+		//Give birth
+		if ( pregnantMonth >= 9 ) {
 			tribe.addNewBorn(new Human());
 			isPregnant = false;
+			pregnantMonth = 0;
 		}
 	}
 	
@@ -204,6 +217,14 @@ public class Human implements Actor {
 		} else {
 			return new Gatherer();
 		}
+	}
+	
+	public boolean canPerformTask() {
+		return isAdult() && pregnantMonth <= 6;
+	}
+	
+	public boolean isAdult() {
+		return getAge() >= Rules.humanAdultAge;
 	}
 	
 

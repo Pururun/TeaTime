@@ -208,11 +208,15 @@ public class Tribe implements Actor {
 		}		
 	}
 	
+	public Province getHomeProvince() {
+		return homeProvince;
+	}
+	
 	private List<Human> getListofAssignableHumans() {
 		List<Human> assignables = new ArrayList<Human>();
 		
 		for ( Human h : humans ) {
-			if ( h.getAge() >= Rules.humanAdultAge && !h.isPregnant() ) {
+			if ( h.canPerformTask() ) {
 				assignables.add(h);
 			}
 		}
@@ -276,8 +280,11 @@ public class Tribe implements Actor {
 		for (Human h : humans) {
 			while (!h.hasEatenFull()) {
 				Food eatableFood = getFirstNonEmptyFood();
+				Log.e("feedHumans", "amount: " + eatableFood);
 				if (eatableFood == null) {
-					starvingHuman = h;
+					if ( !starvation ) {
+						starvingHuman = h;
+					}
 					starvation = true;
 					break;
 				} else {
