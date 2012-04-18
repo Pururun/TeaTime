@@ -18,8 +18,7 @@ public class Hunter extends Craft {
 
 	@Override
 	public boolean canPerformFoodCraft() {
-		// TODO Auto-generated method stub
-		return false;
+		return true;
 	}
 
 	@Override
@@ -36,7 +35,7 @@ public class Hunter extends Craft {
 
 		// Increase tech
 		tech.progress += exp;
-
+		
 		return new Food(Rules.hunt(size, exp, tech.getSkill()), Food.TYPE_MEAT,
 				Rules.foodAgeTurns);
 	}

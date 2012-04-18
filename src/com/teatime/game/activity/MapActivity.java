@@ -2,6 +2,7 @@ package com.teatime.game.activity;
 
 import android.os.Bundle;
 import android.widget.LinearLayout;
+
 import com.teatime.game.R;
 import com.teatime.game.model.World;
 import com.teatime.game.view.MapView;
