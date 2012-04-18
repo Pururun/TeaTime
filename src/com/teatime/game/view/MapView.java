@@ -10,22 +10,46 @@ import android.view.View;
 
 import com.teatime.game.R;
 import com.teatime.game.model.Province;
+import com.teatime.game.model.Tribe;
 import com.teatime.game.model.World;
 
 public class MapView extends View{
 	
 	private List<ProvinceView> provinceViews;
+	private List<TribeView> tribeViews;
 	
 
 	public MapView(int x, int y, World world, Context context, Resources resources) {
 		super(context);
 		
 		initializeMapView(x, y, world, resources);
-		
+	}
+
+	private void initializeMapView(int mapX, int mapY, World world, Resources resources) {
+		generateProvinceViews(mapX, mapY, world, resources);
+		generateTribeViews(0, 0, world, resources);
 	}
 	
-	private void initializeMapView(int mapX, int mapY, World world, Resources resources) {
+	private void generateTribeViews(int offsetX, int offsetY, World world, Resources resources) {
+		// Create list of provinceViews
+		tribeViews = new LinkedList<TribeView>();
 		
+		List<Tribe> tribes = World.getWorld().getTribes();
+		
+		for(Tribe tribe : tribes) {
+			
+			for(ProvinceView provinceView : provinceViews) {
+				
+				Province province = provinceView.getProvince();
+				if(tribe.getHomeProvince() == province) {
+					TribeView tribeView = new TribeView(resources, offsetX, offsetY, R.drawable.tribe, provinceView, tribe);
+					tribeViews.add(tribeView);
+				}
+			}
+		}
+	}
+
+	private void generateProvinceViews(int mapX, int mapY, World world, Resources resources) {
 		// Create list of provinceViews
 		provinceViews = new LinkedList<ProvinceView>();
 		
@@ -70,10 +94,9 @@ public class MapView extends View{
 				y++;
 				x = 0;
 			}
-			
 		}
 	}
-	
+
 	public void draw() {
 		invalidate();
 	}
@@ -84,6 +107,11 @@ public class MapView extends View{
 		// Draw all provinces
 		for(ProvinceView provinceView : provinceViews) {
 			provinceView.draw(canvas);
+		}
+		
+		// Draw all tribes
+		for(TribeView tribeView : tribeViews) {
+			tribeView.draw(canvas);
 		}
 	}
 

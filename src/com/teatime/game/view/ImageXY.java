@@ -13,10 +13,13 @@ public class ImageXY extends Image{
     public ImageXY(Resources res, int drawable, int x, int y) {
     	super(res, drawable);
     	
-    	this.x = x - mBitmap.getWidth() / 2;
-        this.y = y - mBitmap.getHeight() / 2;
+    	//this.x = x - mBitmap.getWidth() / 2;
+        //this.y = y - mBitmap.getHeight() / 2;
+    	
+    	this.x = x;
+    	this.y = y;
         
-        pixelsToDps(res);
+        //pixelsToDps(res);
     }
     
     public void draw(Canvas canvas) {
@@ -25,8 +28,16 @@ public class ImageXY extends Image{
     	}
     }
     
+    public int getX() {
+    	return x;
+    }
+    
+    public int getY() {
+    	return y;
+    }
+    
     private void pixelsToDps(Resources res) {
-    	x = (int)TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, (float)x, res.getDisplayMetrics());
-		y = (int)TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, (float)y, res.getDisplayMetrics());
+    	x = (int)TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, x, res.getDisplayMetrics());
+		y = (int)TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, y, res.getDisplayMetrics());
     }
 }

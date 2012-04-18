@@ -12,6 +12,7 @@ public class MapActivity extends BaseActivity {
 	private World world;
 	private MapView mapView;
 	
+	@Override
 	public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_map);

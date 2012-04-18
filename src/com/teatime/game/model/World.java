@@ -77,6 +77,10 @@ public class World {
 		return provinces;
 	}
 	
+	public List<Tribe> getTribes() {
+		return tribes;
+	}
+	
 	public void simulateWorld(Orders orders) {
 		for ( Tribe t : tribes) {
 			t.simulateNext(orders);

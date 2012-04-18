@@ -32,6 +32,7 @@ public class AssignActivity extends BaseActivity {
 	
 	private ProgressDialog progressDialog;
 	
+	@Override
 	public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
@@ -42,7 +43,6 @@ public class AssignActivity extends BaseActivity {
         
         hunterAssignEdit.addTextChangedListener(new TextWatcher() {
 
-			@Override
 			public void afterTextChanged(Editable arg0) {
 				try {
 					hunterAssign = Integer.parseInt(arg0.toString());
@@ -51,14 +51,12 @@ public class AssignActivity extends BaseActivity {
 					}
 			}
 
-			@Override
 			public void beforeTextChanged(CharSequence s, int start, int count,
 					int after) {
 				// TODO Auto-generated method stub
 				
 			}
 
-			@Override
 			public void onTextChanged(CharSequence s, int start, int before,
 					int count) {
 				// TODO Auto-generated method stub
@@ -69,7 +67,6 @@ public class AssignActivity extends BaseActivity {
         
         gathererAssignEdit.addTextChangedListener(new TextWatcher() {
 
-			@Override
 			public void afterTextChanged(Editable arg0) {
 				try {
 					gathererAssign = Integer.parseInt(arg0.toString());
@@ -78,14 +75,12 @@ public class AssignActivity extends BaseActivity {
 				}
 			}
 
-			@Override
 			public void beforeTextChanged(CharSequence s, int start, int count,
 					int after) {
 				// TODO Auto-generated method stub
 				
 			}
 
-			@Override
 			public void onTextChanged(CharSequence s, int start, int before,
 					int count) {
 				// TODO Auto-generated method stub
