@@ -1,6 +1,7 @@
 package com.teatime.game.activity;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.TextView;
 
 import com.teatime.game.R;
@@ -11,23 +12,25 @@ import com.teatime.game.model.World;
 
 public class StatsViewActivity extends BaseActivity {
 	
-	Tribe tribe;
+	String tribeName;
 	
 	public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         
         setContentView(R.layout.layout_stats);
         
-        String tribeName = getIntent().getStringExtra("tribeName");
+        tribeName = getIntent().getStringExtra("tribeName");
         
-        if ( tribeName != null ) {
-        	tribe = World.getWorld().getTribe(tribeName);
-        } else {
-        	tribe = World.getWorld().getTribe("SuperTribe");
-        }
     }
 	
 	private void setUpStats() {
+		Tribe tribe;
+		if ( tribeName != null ) {
+        	tribe = World.getWorld().getTribe(tribeName);
+        } else {
+        	return;
+        }
+		
 		TextView title = (TextView) findViewById(R.id.title);
 		title.setText(tribe.getName());
 		

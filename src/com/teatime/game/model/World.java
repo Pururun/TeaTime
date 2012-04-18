@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Random;
 
 import com.teatime.game.model.com.Orders;
+import com.teatime.game.model.com.Result;
 
 public class World {
 	
@@ -89,6 +90,10 @@ public class World {
 			}
 		}
 		return null;
+	}
+	
+	public Result getResults(String name) {
+		return getTribe(name).getResults();
 	}
 
 }

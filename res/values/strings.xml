@@ -8,5 +8,13 @@
     <string name="food">Food</string>
     <string name="adults">Adults</string>
     <string name="gatherer_tech">Gatherer Tech</string>
-    <string name="hunter_tech">Hunterer tech</string>
+    <string name="hunter_tech">Hunter tech</string>
+    <string name="gatherers">Gatherers</string>
+    <string name="hunters">Hunters</string>
+    <string name="food_gathered">Food from gathering sources</string>
+    <string name="food_hunted">Food from hunting</string>
+    <string name="starving_population">Starving Population</string>
+    <string name="births">Births</string>
+    <string name="deaths">Deaths</string>
+    <string name="expected_population_growth">Expected Population Growth</string>
 </resources>

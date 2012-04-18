@@ -12,6 +12,7 @@ import java.util.Set;
 import android.util.Log;
 
 import com.teatime.game.model.com.Orders;
+import com.teatime.game.model.com.Result;
 import com.teatime.game.model.rules.Rules;
 
 public class Tribe implements Actor {
@@ -29,6 +30,8 @@ public class Tribe implements Actor {
 	private final String name;
 	
 	private List<Human> newBorns;
+	
+	private Result lastRoundResults = null;
 	
 	public Tribe(List<Province> provinces, Province homeProvince, String name) {
 		ownedProvinces = provinces;
@@ -95,6 +98,9 @@ public class Tribe implements Actor {
 		
 		Orders orders = (Orders) data;
 		
+		//Clear old results
+		lastRoundResults = new Result();
+		
 		//Set up humans and their tasks
 		setUpAssignments(orders);
 		
@@ -122,6 +128,7 @@ public class Tribe implements Actor {
 		}
 		
 		//Add newborns to humans
+		lastRoundResults.nrOfBirths = newBorns != null ? newBorns.size() : 0;
 		Log.e("Add newborns", "We are here");
 		if ( newBorns != null ) {
 			humans.addAll(newBorns);
@@ -135,11 +142,13 @@ public class Tribe implements Actor {
 			Human h = it.next();
 			if ( !h.isAlive() ) {
 				it.remove();
+				lastRoundResults.nrOfDeaths++;
 			}
 		}
 		
 		//If possible, make people pregnant
 		int newChildren = getNumberOfNewChildren();
+		int actualPregnantWomen = 0;
 		Log.e("Make Pregnant", "newChildren: " + newChildren + " population: " + humans.size());
 		Collections.sort(humans, new PregnantSorter());
 		Log.e("Make Pregnant", "first: " + humans.get(0) + " canBePregnant: " + humans.get(0).canBePregnant());
@@ -149,7 +158,10 @@ public class Tribe implements Actor {
 				break;
 			}
 			h.makePregnant();
+			actualPregnantWomen++;
 		}
+		
+		lastRoundResults.populationGrowth = (actualPregnantWomen*1.0)/(humans.size()*1.0);
 		
 	}
 	
@@ -169,6 +181,10 @@ public class Tribe implements Actor {
 				nrOfGatherers += (assignables.size() - (nrOfHunters + nrOfGatherers));
 			}		 
 		}
+		
+		//Save assigned numbers
+		lastRoundResults.nrOfHunters = nrOfHunters;
+		lastRoundResults.nrOfGatherers = nrOfGatherers;
 		
 		//Sort By Best Hunters
 		//Assign best hunters
@@ -216,7 +232,9 @@ public class Tribe implements Actor {
 		
 		for ( Craft craft : crafts ) {
 			if ( craft.canPerformFoodCraft() ) {
-				food.add( craft.performFoodCraft(craftsMap.get(craft), getTech(craft)) );
+				Food gainedFood = craft.performFoodCraft(craftsMap.get(craft), getTech(craft));
+				lastRoundResults.addFoodCraftResult(craft, gainedFood);
+				food.add( gainedFood );
 			}
 		}
 		
@@ -256,15 +274,23 @@ public class Tribe implements Actor {
 	private void feedHumans() {
 		Collections.sort(humans, new FoodSorter());
 
+		boolean starvation = false;
+		Human starvingHuman = null;
 		for (Human h : humans) {
 			while (!h.hasEatenFull()) {
 				Food eatableFood = getFirstNonEmptyFood();
 				if (eatableFood == null) {
+					starvingHuman = h;
+					starvation = true;
 					break;
 				} else {
 					h.eat(eatableFood);
 				}
 			}
+		}
+		
+		if ( starvation && starvingHuman != null ) {
+			lastRoundResults.nrOfStarvingHumans = humans.size() - humans.indexOf(starvingHuman);
 		}
 	}
 	
@@ -374,6 +400,10 @@ public class Tribe implements Actor {
 		}
 		
 		newBorns.add(human);
+	}
+	
+	public Result getResults() {
+		return lastRoundResults;
 	}
 }
 
