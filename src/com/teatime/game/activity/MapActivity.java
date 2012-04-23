@@ -2,6 +2,7 @@ package com.teatime.game.activity;
 
 import android.os.Bundle;
 import android.widget.LinearLayout;
+import android.widget.SeekBar;
 
 import com.teatime.game.R;
 import com.teatime.game.model.World;
@@ -11,6 +12,7 @@ public class MapActivity extends BaseActivity {
 	
 	private World world;
 	private MapView mapView;
+	private SeekBar seekBar;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -24,7 +26,6 @@ public class MapActivity extends BaseActivity {
         
         // Create map
         mapView = new MapView(50, 50, world, this, getResources());
-        
         
         // Add mapview to linearlayout 
         rel.addView(mapView);

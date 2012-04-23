@@ -1,53 +1,65 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical" >
+    android:layout_height="match_parent">
 
     <LinearLayout
-        android:id="@+id/linearLayout1"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
-
+    	android:layout_height="wrap_content"
+    	android:id="@+id/topLayout"
+    	android:orientation="horizontal">
+    
         <TextView
-            android:id="@+id/textView1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Hunters"
-            android:textAppearance="?android:attr/textAppearanceMedium" />
-
-        <EditText
-            android:id="@+id/hunter_assign"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:inputType="number"
-            android:hint="e.g. 40" >
-
-            <requestFocus />
-        </EditText>
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/linearLayout2"
+	    	android:layout_width="wrap_content"
+	    	android:layout_height="wrap_content"
+	    	android:text="Hunters" />
+        	 
+        <TextView
+		   	android:layout_width="match_parent"
+		   	android:layout_height="wrap_content"
+		   	android:gravity="right"
+		   	android:text="Gatherers" />
+    </LinearLayout>    
+        
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
-
-        <TextView
-            android:id="@+id/textView2"
-            android:layout_width="wrap_content"
+   		android:layout_height="wrap_content"
+   		android:layout_below="@+id/topLayout">
+   		
+        <LinearLayout
+            android:layout_width="25dp"
             android:layout_height="wrap_content"
-            android:text="Gatherers"
-            android:textAppearance="?android:attr/textAppearanceMedium" />
+            android:orientation="horizontal"
+            android:id="@+id/nrOfHuntersLayout"
+            android:layout_centerVertical="true">
+        
+	        <TextView
+		        android:layout_width="wrap_content"    
+		        android:layout_height="wrap_content"
+		        android:id="@+id/nrOfHuntersText"
+		        android:text="0" />
+	    </LinearLayout>   
 
-        <EditText
-            android:id="@+id/gatherer_assign"
-            android:layout_width="match_parent"
+	    <SeekBar
+	        android:layout_width="249dp"
+	        android:layout_height="wrap_content"
+	        android:id="@+id/seekBar"
+	        android:layout_toRightOf="@+id/nrOfHuntersLayout"
+	        android:max="100" />
+	    
+	    <LinearLayout
+            android:layout_width="25dp"
             android:layout_height="wrap_content"
-            android:inputType="number"
-            android:hint="e.g. 40" />
-
-    </LinearLayout>
-
-</LinearLayout>
+            android:orientation="horizontal"
+            android:id="@+id/nrOfGatherersLayout"
+            android:layout_toRightOf="@+id/seekBar"
+            android:layout_centerVertical="true">
+	    
+		    <TextView
+		        android:id="@+id/nrOfGatherersText"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:text="100" />
+	    </LinearLayout>
+   	</RelativeLayout>
+</RelativeLayout>

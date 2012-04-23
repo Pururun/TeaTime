@@ -1,6 +1,8 @@
 package com.teatime.game.view;
 
 import android.content.res.Resources;
+
+
 import com.teatime.game.model.Province;
 
 public class ProvinceView extends ImageXY{

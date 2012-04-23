@@ -11,6 +11,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.SeekBar;
 import android.widget.TextView;
 
 import com.teatime.game.R;
@@ -22,15 +23,17 @@ import com.teatime.game.model.com.Result;
  * 
  * Staplar
  * 
- * @author 
+ * @author
  *
  */
-public class AssignActivity extends BaseActivity {
+public class AssignActivity extends BaseActivity implements SeekBar.OnSeekBarChangeListener {
+	
 	
 	public static int gathererAssign;
 	public static int hunterAssign;
 	
 	private ProgressDialog progressDialog;
+	private SeekBar huntersGatherersBar;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -38,74 +41,26 @@ public class AssignActivity extends BaseActivity {
 
         setContentView(R.layout.layout_assign);
         
-        EditText hunterAssignEdit = (EditText) findViewById(R.id.hunter_assign);
-        EditText gathererAssignEdit = (EditText) findViewById(R.id.gatherer_assign);
-        
-        hunterAssignEdit.addTextChangedListener(new TextWatcher() {
-
-			public void afterTextChanged(Editable arg0) {
-				try {
-					hunterAssign = Integer.parseInt(arg0.toString());
-				} catch ( Exception e) {
-						
-					}
-			}
-
-			public void beforeTextChanged(CharSequence s, int start, int count,
-					int after) {
-				// TODO Auto-generated method stub
-				
-			}
-
-			public void onTextChanged(CharSequence s, int start, int before,
-					int count) {
-				// TODO Auto-generated method stub
-				
-			}
-        	
-        });
-        
-        gathererAssignEdit.addTextChangedListener(new TextWatcher() {
-
-			public void afterTextChanged(Editable arg0) {
-				try {
-					gathererAssign = Integer.parseInt(arg0.toString());
-				} catch (Exception e) {
-					
-				}
-			}
-
-			public void beforeTextChanged(CharSequence s, int start, int count,
-					int after) {
-				// TODO Auto-generated method stub
-				
-			}
-
-			public void onTextChanged(CharSequence s, int start, int before,
-					int count) {
-				// TODO Auto-generated method stub
-				
-			}
-        	
-        });
+        huntersGatherersBar = (SeekBar)findViewById(R.id.seekBar);
+        huntersGatherersBar.setOnSeekBarChangeListener(this);
     }
-	
+
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		
+
 		menu.add("Next turn");
-		
+
 		return super.onCreateOptionsMenu(menu);
 	}
-	
+
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		
 		if ( item.getTitle().equals("Next turn") ) {
 			
 			Orders order = new Orders();
-			order.percentageGatherers = gathererAssign*0.01;
-			order.percentageHunters = hunterAssign*0.01;
+			order.percentageGatherers = gathererAssign * 0.01;
+			order.percentageHunters = hunterAssign * 0.01;
 			
 			Result results = new SimulateWorldTask().doInBackground(order);
 			
@@ -185,6 +140,20 @@ public class AssignActivity extends BaseActivity {
 		}
 		
 	}
-	
-	
+
+	public void onProgressChanged(SeekBar seekBar, int progress,
+			boolean fromUser) {
+
+		TextView nrOfHuntersText = (TextView)findViewById(R.id.nrOfHuntersText);
+		TextView nrOfGatherersText = (TextView)findViewById(R.id.nrOfGatherersText);
+		
+		gathererAssign = progress;
+		hunterAssign = 100 - progress;
+
+		nrOfHuntersText.setText(String.valueOf(gathererAssign));
+		nrOfGatherersText.setText(String.valueOf(hunterAssign));
+	}
+
+	public void onStartTrackingTouch(SeekBar seekBar) {}
+	public void onStopTrackingTouch(SeekBar seekBar) {}
 }
