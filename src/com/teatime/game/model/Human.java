@@ -22,6 +22,9 @@ public class Human implements Actor {
 	private boolean isAlive;
 	private int foodToEat = 0;
 	
+	//GUI
+	private String name;
+	
 	/**
 	 * 
 	 * Used to generate humans at game start
@@ -225,6 +228,18 @@ public class Human implements Actor {
 	
 	public boolean isAdult() {
 		return getAge() >= Rules.humanAdultAge;
+	}
+	
+	public Sex getSex() {
+		return sex;
+	}
+	
+	public void setName (String name) {
+		this.name = name;
+	}
+	
+	public String getName() {
+		return name;
 	}
 	
 

@@ -23,5 +23,6 @@
         <activity android:name=".activity.StatsViewActivity" />
         <activity android:name=".activity.AssignActivity" />
         <activity android:name=".activity.GameMainActivity" />
+        <activity android:name=".activity.HumanListActivity" />
     </application>
 </manifest>

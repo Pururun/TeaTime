@@ -51,5 +51,10 @@ public class Gatherer extends Craft {
 	public double getValue() {
 		return Rules.gathererValue;
 	}
+	
+	@Override
+	public String toString() {
+		return "Gatherer";
+	}
 
 }

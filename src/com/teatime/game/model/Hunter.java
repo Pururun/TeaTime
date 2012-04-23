@@ -49,5 +49,10 @@ public class Hunter extends Craft {
 	public double getValue() {
 		return Rules.hunterValue;
 	}
+	
+	@Override
+	public String toString() {
+		return "Hunter";
+	}
 
 }

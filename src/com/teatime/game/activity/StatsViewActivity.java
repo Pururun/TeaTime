@@ -1,6 +1,9 @@
 package com.teatime.game.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.TextView;
 
 import com.teatime.game.R;
@@ -55,5 +58,26 @@ public class StatsViewActivity extends BaseActivity {
 		super.onResume();
 		
 		setUpStats();
+	}
+	
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		
+		menu.add("Show Humans");
+		
+		return super.onCreateOptionsMenu(menu);
+	}
+	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		
+		if ( item.getTitle().equals("Show Humans") ) {
+			
+			Intent intent = new Intent(this, HumanListActivity.class);
+			intent.putExtra("Tribe", tribeName);
+			startActivity(intent);
+		}
+		
+		return super.onOptionsItemSelected(item);
 	}
 }

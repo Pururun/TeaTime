@@ -13,6 +13,8 @@ import android.util.Log;
 
 import com.teatime.game.model.com.Orders;
 import com.teatime.game.model.com.Result;
+import com.teatime.game.model.other.NameGenerator;
+import com.teatime.game.model.other.NameGeneratorList;
 import com.teatime.game.model.rules.Rules;
 
 public class Tribe implements Actor {
@@ -45,6 +47,9 @@ public class Tribe implements Actor {
 		techs.add(new HunterTech());
 		
 		this.name = name;
+		
+		//Assign namegenerator
+		NameGeneratorList.assignGenerator(this);
 		
 		//Start up tribe
 		generateHumans();
@@ -92,6 +97,12 @@ public class Tribe implements Actor {
 		humans.add(new Human(19, Human.Sex.Female));
 		humans.add(new Human(21, Human.Sex.Female));
 		
+		//Assign names
+		NameGenerator names = NameGeneratorList.getGenerator(this);
+		for (Human h: humans) {
+			h.setName(names.generateName(h.getSex()));
+		}
+		
 	}
 	
 	public void simulateNext(Object data) {
@@ -127,9 +138,13 @@ public class Tribe implements Actor {
 			h.simulateNext(this);
 		}
 		
-		//Add newborns to humans
+		//Add newborns to humans and assign names
+		NameGenerator names = NameGeneratorList.getGenerator(this);
 		lastRoundResults.nrOfBirths = newBorns != null ? newBorns.size() : 0;
 		if ( newBorns != null ) {
+			for ( Human newBorn : newBorns ) {
+				newBorn.setName(names.generateName(newBorn.getSex()));
+			}
 			humans.addAll(newBorns);
 			newBorns.clear();
 		}
@@ -408,6 +423,10 @@ public class Tribe implements Actor {
 	
 	public Result getResults() {
 		return lastRoundResults;
+	}
+	
+	public List<Human> getHumans() {
+		return humans;
 	}
 }
 
