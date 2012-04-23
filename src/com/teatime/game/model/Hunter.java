@@ -41,7 +41,7 @@ public class Hunter extends Craft {
 		// Increase tech
 		tech.progress += exp;
 		
-		return new Food(Rules.hunt(size, tech.getSkill(), exp), Food.TYPE_MEAT,
+		return new Food(Rules.hunt(size, exp), Food.TYPE_MEAT,
 				Rules.foodAgeTurns);
 	}
 

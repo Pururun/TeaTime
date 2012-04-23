@@ -44,7 +44,7 @@ public class Gatherer extends Craft {
 		//Increase tech
 		tech.progress += exp;
 		
-		return new Food(Rules.gatherFood(size, tech.getSkill(), exp), Food.TYPE_GATHER_FOOD, Rules.foodAgeTurns);
+		return new Food(Rules.gatherFood(size, exp), Food.TYPE_GATHER_FOOD, Rules.foodAgeTurns);
 	}
 
 	@Override

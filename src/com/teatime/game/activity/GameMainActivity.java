@@ -44,7 +44,5 @@ public class GameMainActivity extends TabActivity {
 	    tabHost.setCurrentTab(1);
 	    
 	    
-	    // Create world
-	    World.createWorld(16);
 	}
 }

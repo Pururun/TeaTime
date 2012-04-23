@@ -53,6 +53,9 @@ public class Tribe implements Actor {
 		
 		//Start up tribe
 		generateHumans();
+		
+		//Assign ownedProvinces
+		World.getOwnedProvinces(provinces, this);
 	}
 	
 	private void generateHumans() {
@@ -174,6 +177,11 @@ public class Tribe implements Actor {
 		}
 		
 		lastRoundResults.populationGrowth = (actualPregnantWomen*1.0)/(humans.size()*1.0);
+		
+		//Update tech
+		for ( Tech t : techs ) {
+			t.tryLevel();		
+		}
 		
 	}
 	
@@ -427,6 +435,11 @@ public class Tribe implements Actor {
 	
 	public List<Human> getHumans() {
 		return humans;
+	}
+	
+	public int getRange() {
+		//TODO Make this a real value
+		return 1;
 	}
 }
 
