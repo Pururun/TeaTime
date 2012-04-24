@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import android.util.Log;
+
 import com.teatime.game.model.com.Orders;
 import com.teatime.game.model.com.Result;
 
@@ -49,21 +51,6 @@ public class World {
 		return instance;
 	}
 	
-	public static World createWorld() {
-		
-		//Generate provinces
-		List<Province> newProvinces = new ArrayList<Province>();
-		//newProvinces.add(object);
-		
-		//Generate tribes
-		List<Tribe> newTribes = new ArrayList<Tribe>();
-		//newTribes.add(arg0)
-		
-		instance = new World(newTribes, newProvinces);
-		
-		return instance; 
-	}
-	
 	public static World getWorld() {
 		if (instance != null) {
 			return instance;
@@ -98,6 +85,34 @@ public class World {
 	
 	public Result getResults(String name) {
 		return getTribe(name).getResults();
+	}
+	
+	public static List<Province> getOwnedProvinces(List<Province> worldProvinces, Tribe tribe) {
+		int homeProvIndex = worldProvinces.indexOf(tribe.getHomeProvince());
+		
+		int range = tribe.getRange();
+		
+		List<Province> ownedProvinces = new ArrayList<Province>();
+		
+		//Add other provinces
+		int upperLeft = (int) (homeProvIndex - Math.sqrt(worldProvinces.size())*range - range);
+		int upperRight = (int) (homeProvIndex - Math.sqrt(worldProvinces.size())*range + range);
+		int lowerLeft = (int) (homeProvIndex + Math.sqrt(worldProvinces.size())*range - range);
+		int lowerRight = (int) (homeProvIndex + Math.sqrt(worldProvinces.size())*range + range);
+		for ( int i = upperLeft; i <= lowerLeft; i+=Math.sqrt(worldProvinces.size()) ) {
+			for (int j = i; j <= i + (upperRight - upperLeft); j++) {
+				try {
+					ownedProvinces.add(worldProvinces.get(j));
+				} catch (ArrayIndexOutOfBoundsException e) {
+					
+				}
+				if ( (j+1) % Math.sqrt(worldProvinces.size()) == 0 ) {
+					j = i + (upperRight - upperLeft);
+				}
+			}
+		}
+		
+		return ownedProvinces;
 	}
 
 }
