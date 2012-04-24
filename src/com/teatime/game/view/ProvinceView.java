@@ -18,10 +18,10 @@ public class ProvinceView extends ImageXY{
 		this.province = province;
 		
 		
-		int riverViewX1 = x + 4;
-		int riverViewY1 = y + 20;
+		int riverViewX1 = x + 20;
+		int riverViewY1 = y + 4;
 		int riverViewX2 = x + 4;
-		int riverViewY2 = y + 7;
+		int riverViewY2 = y + 20;
 
 
 //		this.riverView = RiverView.generateLinearRiverView(resources, riverViewX1, riverViewY1, riverViewX2, riverViewY2);
