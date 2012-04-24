@@ -19,14 +19,14 @@ public class MapView extends View{
 	private List<TribeView> tribeViews;
 	
 
-	public MapView(int x, int y, World world, Context context, Resources resources) {
+	public MapView(int mapOffsetX, int mapOffsetY, World world, Context context, Resources resources) {
 		super(context);
 		
-		initializeMapView(x, y, world, resources);
+		initializeMapView(mapOffsetX, mapOffsetY, world, resources);
 	}
 
-	private void initializeMapView(int mapX, int mapY, World world, Resources resources) {
-		generateProvinceViews(mapX, mapY, world, resources);
+	private void initializeMapView(int mapOffsetX, int mapOffsetY, World world, Resources resources) {
+		generateProvinceViews(mapOffsetX, mapOffsetY, world, resources);
 		generateTribeViews(0, 0, world, resources);
 	}
 	
@@ -49,7 +49,7 @@ public class MapView extends View{
 		}
 	}
 
-	private void generateProvinceViews(int mapX, int mapY, World world, Resources resources) {
+	private void generateProvinceViews(int mapOffsetX, int mapOffsetY, World world, Resources resources) {
 		// Create list of provinceViews
 		provinceViews = new LinkedList<ProvinceView>();
 
@@ -78,8 +78,8 @@ public class MapView extends View{
 		for(Province province : World.getWorld().getProvinces()) {
 
 			// Calculate the position of the new ProvinceView
-			int posX = x * provinceViewWidth + mapX;
-			int posY = y * provinceViewHeight + mapY;
+			int posX = x * provinceViewWidth + mapOffsetX;
+			int posY = y * provinceViewHeight + mapOffsetY;
 			
 			ProvinceView provinceView = new ProvinceView(resources, R.drawable.province, posX, posY, province);
 			
