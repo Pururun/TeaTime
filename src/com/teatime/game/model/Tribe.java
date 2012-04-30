@@ -15,6 +15,7 @@ import com.teatime.game.model.com.Orders;
 import com.teatime.game.model.com.Result;
 import com.teatime.game.model.other.NameGenerator;
 import com.teatime.game.model.other.NameGeneratorList;
+import com.teatime.game.model.other.TribeGenerator;
 import com.teatime.game.model.rules.Rules;
 
 public class Tribe implements Actor {
@@ -60,45 +61,7 @@ public class Tribe implements Actor {
 	
 	private void generateHumans() {
 		
-		humans.add(new Human(22, Human.Sex.Male));
-		humans.add(new Human(11, Human.Sex.Male));
-		humans.add(new Human(35, Human.Sex.Male));
-		humans.add(new Human(36, Human.Sex.Male));
-		humans.add(new Human(40, Human.Sex.Male));
-		humans.add(new Human(45, Human.Sex.Male));
-		humans.add(new Human(9, Human.Sex.Male));
-		humans.add(new Human(23, Human.Sex.Male));
-		humans.add(new Human(7, Human.Sex.Male));
-		humans.add(new Human(5, Human.Sex.Male));
-		humans.add(new Human(1, Human.Sex.Male));
-		humans.add(new Human(9, Human.Sex.Male));
-		humans.add(new Human(29, Human.Sex.Male));
-		humans.add(new Human(31, Human.Sex.Male));
-		humans.add(new Human(56, Human.Sex.Male));
-		humans.add(new Human(15, Human.Sex.Male));
-		humans.add(new Human(40, Human.Sex.Male));
-		humans.add(new Human(19, Human.Sex.Male));
-		humans.add(new Human(21, Human.Sex.Male));
-		
-		humans.add(new Human(22, Human.Sex.Female));
-		humans.add(new Human(11, Human.Sex.Female));
-		humans.add(new Human(35, Human.Sex.Female));
-		humans.add(new Human(36, Human.Sex.Female));
-		humans.add(new Human(40, Human.Sex.Female));
-		humans.add(new Human(45, Human.Sex.Female));
-		humans.add(new Human(9, Human.Sex.Female));
-		humans.add(new Human(23, Human.Sex.Female));
-		humans.add(new Human(7, Human.Sex.Female));
-		humans.add(new Human(5, Human.Sex.Female));
-		humans.add(new Human(1, Human.Sex.Female));
-		humans.add(new Human(9, Human.Sex.Female));
-		humans.add(new Human(29, Human.Sex.Female));
-		humans.add(new Human(31, Human.Sex.Female));
-		humans.add(new Human(56, Human.Sex.Female));
-		humans.add(new Human(15, Human.Sex.Female));
-		humans.add(new Human(40, Human.Sex.Female));
-		humans.add(new Human(19, Human.Sex.Female));
-		humans.add(new Human(21, Human.Sex.Female));
+		humans.addAll(TribeGenerator.generateTribe(30));
 		
 		//Assign names
 		NameGenerator names = NameGeneratorList.getGenerator(this);
