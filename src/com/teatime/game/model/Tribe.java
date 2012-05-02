@@ -15,6 +15,7 @@ import com.teatime.game.model.com.Orders;
 import com.teatime.game.model.com.Result;
 import com.teatime.game.model.other.NameGenerator;
 import com.teatime.game.model.other.NameGeneratorList;
+import com.teatime.game.model.other.TribeGenerator;
 import com.teatime.game.model.rules.Rules;
 
 public class Tribe implements Actor {
@@ -36,7 +37,7 @@ public class Tribe implements Actor {
 	private Result lastRoundResults = null;
 	
 	public Tribe(List<Province> provinces, Province homeProvince, String name) {
-		ownedProvinces = provinces;
+		//ownedProvinces = provinces;
 		this.homeProvince = homeProvince;
 		
 		humans = new ArrayList<Human>();
@@ -55,50 +56,12 @@ public class Tribe implements Actor {
 		generateHumans();
 		
 		//Assign ownedProvinces
-		World.getOwnedProvinces(provinces, this);
+		ownedProvinces = World.getOwnedProvinces(provinces, this);
 	}
 	
 	private void generateHumans() {
 		
-		humans.add(new Human(22, Human.Sex.Male));
-		humans.add(new Human(11, Human.Sex.Male));
-		humans.add(new Human(35, Human.Sex.Male));
-		humans.add(new Human(36, Human.Sex.Male));
-		humans.add(new Human(40, Human.Sex.Male));
-		humans.add(new Human(45, Human.Sex.Male));
-		humans.add(new Human(9, Human.Sex.Male));
-		humans.add(new Human(23, Human.Sex.Male));
-		humans.add(new Human(7, Human.Sex.Male));
-		humans.add(new Human(5, Human.Sex.Male));
-		humans.add(new Human(1, Human.Sex.Male));
-		humans.add(new Human(9, Human.Sex.Male));
-		humans.add(new Human(29, Human.Sex.Male));
-		humans.add(new Human(31, Human.Sex.Male));
-		humans.add(new Human(56, Human.Sex.Male));
-		humans.add(new Human(15, Human.Sex.Male));
-		humans.add(new Human(40, Human.Sex.Male));
-		humans.add(new Human(19, Human.Sex.Male));
-		humans.add(new Human(21, Human.Sex.Male));
-		
-		humans.add(new Human(22, Human.Sex.Female));
-		humans.add(new Human(11, Human.Sex.Female));
-		humans.add(new Human(35, Human.Sex.Female));
-		humans.add(new Human(36, Human.Sex.Female));
-		humans.add(new Human(40, Human.Sex.Female));
-		humans.add(new Human(45, Human.Sex.Female));
-		humans.add(new Human(9, Human.Sex.Female));
-		humans.add(new Human(23, Human.Sex.Female));
-		humans.add(new Human(7, Human.Sex.Female));
-		humans.add(new Human(5, Human.Sex.Female));
-		humans.add(new Human(1, Human.Sex.Female));
-		humans.add(new Human(9, Human.Sex.Female));
-		humans.add(new Human(29, Human.Sex.Female));
-		humans.add(new Human(31, Human.Sex.Female));
-		humans.add(new Human(56, Human.Sex.Female));
-		humans.add(new Human(15, Human.Sex.Female));
-		humans.add(new Human(40, Human.Sex.Female));
-		humans.add(new Human(19, Human.Sex.Female));
-		humans.add(new Human(21, Human.Sex.Female));
+		humans.addAll(TribeGenerator.generateTribe(30));
 		
 		//Assign names
 		NameGenerator names = NameGeneratorList.getGenerator(this);
@@ -256,9 +219,22 @@ public class Tribe implements Actor {
 		
 		for ( Craft craft : crafts ) {
 			if ( craft.canPerformFoodCraft() ) {
-				Food gainedFood = craft.performFoodCraft(craftsMap.get(craft), getTech(craft));
-				lastRoundResults.addFoodCraftResult(craft, gainedFood);
-				food.add( gainedFood );
+				ProvinceSorter provSorter = new ProvinceSorter(craft);
+				Collections.sort(ownedProvinces, provSorter);
+				
+				for ( int i = 0; i < ownedProvinces.size(); i++ ) {
+					int maxSize = ownedProvinces.get(i).getMaxSize(craft, getTech(craft));
+					List<Human> team = new ArrayList<Human>();
+					while ( craftsMap.get(craft).size() > 0 && maxSize > 0 ) {
+						team.add(craftsMap.get(craft).remove(0));
+						maxSize--;
+					}
+					if (team.size() > 0) {
+						Food gainedFood = craft.performFoodCraft(team, getTech(craft), ownedProvinces.get(i));
+						lastRoundResults.addFoodCraftResult(craft, gainedFood, ownedProvinces.get(i));
+						food.add( gainedFood );
+					}
+				}
 			}
 		}
 		
@@ -435,6 +411,27 @@ public class Tribe implements Actor {
 	
 	public List<Human> getHumans() {
 		return humans;
+	}
+	
+	private class ProvinceSorter implements Comparator<Province> {
+
+		Craft craft;
+		
+		public ProvinceSorter(Craft craft) {
+			this.craft = craft;
+		}
+		
+		@Override
+		public int compare(Province arg0, Province arg1) {
+			if ( arg0.getCraftScore(craft) > arg1.getCraftScore(craft) ) {
+				return -1;
+			} else if ( arg0.getCraftScore(craft) < arg1.getCraftScore(craft) ) {
+				return 1;
+			} else {
+				return 0;
+			}
+		}
+		
 	}
 	
 	public int getRange() {

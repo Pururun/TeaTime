@@ -12,6 +12,7 @@ public class Rules {
 	
 	/* HUMAN */
 	public final static int humanOldAge = 65;
+	public final static int humanFertilityLimitAge = 40;
 	public final static int humanAdultAge = 15;
 	public final static int humanAdultEat = 3;
 	public final static int humanChildEat = 1;
@@ -26,15 +27,21 @@ public class Rules {
 	public final static double gathererLeadershipBonus = 2.5;
 	
 	/* FOOD */
-	public final static int foodAgeTurns = 3;
+	public final static int foodAgeTurns = 2;
+	public final static int farmFoodAgeTurns = 5;
 	
 	public static int gatherFood(int size, double exp) {
 		return (int) (size * exp);
 	}
 	
+	public static int hunt(int size, double exp, int maxFood) {
+		Random rand = new Random();
+		return (int) ((size + rand.nextInt(maxFood)) * exp);
+	}
+	
 	public static int hunt(int size, double exp) {
 		Random rand = new Random();
-		return (int) ((size + rand.nextInt(10)) * exp);
+		return (int) ((size + rand.nextInt(9)) * exp);
 	}
 
 }

@@ -4,6 +4,7 @@ import com.teatime.game.model.Craft;
 import com.teatime.game.model.Food;
 import com.teatime.game.model.Gatherer;
 import com.teatime.game.model.Hunter;
+import com.teatime.game.model.Province;
 
 public class Result {
 	
@@ -25,6 +26,14 @@ public class Result {
 			foodHunted = food.getAmount();
 		} else if ( craft instanceof Gatherer ) {
 			foodGathered = food.getAmount();
+		}
+	}
+	
+	public void addFoodCraftResult(Craft craft, Food food, Province province) {
+		if ( craft instanceof Hunter ) {
+			foodHunted += food.getAmount();
+		} else if ( craft instanceof Gatherer ) {
+			foodGathered += food.getAmount();
 		}
 	}
 

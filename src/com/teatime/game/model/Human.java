@@ -64,6 +64,7 @@ public class Human implements Actor {
 	}
 	
 	public void assignCraft(Craft craft) {
+		
 		if ( currentCraft != null ) {
 			oldCrafts.add(currentCraft);
 		}
@@ -75,8 +76,10 @@ public class Human implements Actor {
 			}
 		}
 		
-		if ( currentCraft == null ) {
+		if ( currentCraft == null && craft != null ) {
 			currentCraft = craft.createCraft();
+		} else if ( craft == null ) {
+			currentCraft = null;
 		}
 	}
 	
@@ -176,7 +179,7 @@ public class Human implements Actor {
 	}
 	
 	public boolean canBePregnant() {
-		return sex == Sex.Female && !isPregnant && getAge() >= Rules.humanAdultAge && starvation < 1;
+		return sex == Sex.Female && !isPregnant && getAge() >= Rules.humanAdultAge && starvation < 1 && getAge() <= Rules.humanFertilityLimitAge;
 	}
 	
 	public double getCraftScore(Craft c) {		

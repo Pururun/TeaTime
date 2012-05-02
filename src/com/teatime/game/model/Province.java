@@ -52,6 +52,32 @@ public class Province {
 	private void generateProvinceAttributes() {
 		generateWaterAttribute();
 	}
+	
+	public int getCraftScore(Craft craft) {
+		if ( craft.getClass() == Hunter.class ) {
+			return animals.getMaxFood();
+		} else if ( craft.getClass() == Gatherer.class ) {
+			//TODO How do we determine this?
+			return 1;
+		}
+		
+		return -1;
+	}
+	
+	public int getMaxSize(Craft craft, Tech tech) {
+		//TODO How do we determine this?
+		if ( craft.getClass() == Hunter.class ) {
+			return 15;
+		} else if ( craft.getClass() == Gatherer.class ) {
+			return 25;
+		}
+		
+		return -1;
+	}
+	
+	public Animals getAnimals() {
+		return animals;
+	}
 
 	private void generateWaterAttribute() {
 		Random random = new Random();
