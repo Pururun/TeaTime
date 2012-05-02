@@ -32,7 +32,7 @@ public class World {
 		
 		Province newProvince;
 		for(int i = 0; i < nrOfProvinces; i++) {
-			newProvince = new Province();
+			newProvince = new Province(i);
 			newProvinces.add(newProvince);
 		}
 		

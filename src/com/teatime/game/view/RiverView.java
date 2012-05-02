@@ -78,14 +78,10 @@ public class RiverView {
 			y += vector.getY();
 			
 		} while((Math.abs(destinationX - x) + Math.abs(destinationY - y)) >= 8 );
-		
-		
-		ImageXY waterTile = new ImageXY(resources, R.drawable.end_tile, (int)nextX, (int)nextY);
-		waterTiles.add(waterTile);
-		
+				
 		return new RiverView(waterTiles);
 	}
-	
+
 	private static void plot(Resources resources, double currentX, double currentY, double optimalX, double optimalY, List<ImageXY> waterTiles) {
 		
 		// Draw dice
