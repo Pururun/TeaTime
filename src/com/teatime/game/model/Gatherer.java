@@ -57,4 +57,10 @@ public class Gatherer extends Craft {
 		return "Gatherer";
 	}
 
+	@Override
+	public Food performFoodCraft(List<Human> humans, Tech tech,
+			Province province) {
+		return performFoodCraft(humans, tech);
+	}
+
 }

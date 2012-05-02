@@ -37,7 +37,7 @@ public class Tribe implements Actor {
 	private Result lastRoundResults = null;
 	
 	public Tribe(List<Province> provinces, Province homeProvince, String name) {
-		ownedProvinces = provinces;
+		//ownedProvinces = provinces;
 		this.homeProvince = homeProvince;
 		
 		humans = new ArrayList<Human>();
@@ -56,7 +56,7 @@ public class Tribe implements Actor {
 		generateHumans();
 		
 		//Assign ownedProvinces
-		World.getOwnedProvinces(provinces, this);
+		ownedProvinces = World.getOwnedProvinces(provinces, this);
 	}
 	
 	private void generateHumans() {
@@ -219,9 +219,22 @@ public class Tribe implements Actor {
 		
 		for ( Craft craft : crafts ) {
 			if ( craft.canPerformFoodCraft() ) {
-				Food gainedFood = craft.performFoodCraft(craftsMap.get(craft), getTech(craft));
-				lastRoundResults.addFoodCraftResult(craft, gainedFood);
-				food.add( gainedFood );
+				ProvinceSorter provSorter = new ProvinceSorter(craft);
+				Collections.sort(ownedProvinces, provSorter);
+				
+				for ( int i = 0; i < ownedProvinces.size(); i++ ) {
+					int maxSize = ownedProvinces.get(i).getMaxSize(craft, getTech(craft));
+					List<Human> team = new ArrayList<Human>();
+					while ( craftsMap.get(craft).size() > 0 && maxSize > 0 ) {
+						team.add(craftsMap.get(craft).remove(0));
+						maxSize--;
+					}
+					if (team.size() > 0) {
+						Food gainedFood = craft.performFoodCraft(team, getTech(craft), ownedProvinces.get(i));
+						lastRoundResults.addFoodCraftResult(craft, gainedFood, ownedProvinces.get(i));
+						food.add( gainedFood );
+					}
+				}
 			}
 		}
 		
@@ -398,6 +411,27 @@ public class Tribe implements Actor {
 	
 	public List<Human> getHumans() {
 		return humans;
+	}
+	
+	private class ProvinceSorter implements Comparator<Province> {
+
+		Craft craft;
+		
+		public ProvinceSorter(Craft craft) {
+			this.craft = craft;
+		}
+		
+		@Override
+		public int compare(Province arg0, Province arg1) {
+			if ( arg0.getCraftScore(craft) > arg1.getCraftScore(craft) ) {
+				return -1;
+			} else if ( arg0.getCraftScore(craft) < arg1.getCraftScore(craft) ) {
+				return 1;
+			} else {
+				return 0;
+			}
+		}
+		
 	}
 	
 	public int getRange() {

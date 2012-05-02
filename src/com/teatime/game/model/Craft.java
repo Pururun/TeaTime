@@ -16,6 +16,8 @@ public abstract class Craft {
 	
 	public abstract Food performFoodCraft(List<Human> humans, Tech tech);
 	
+	public abstract Food performFoodCraft(List<Human> humans, Tech tech, Province province);
+	
 	public double getExperience() {
 		return experience;
 	}

@@ -34,9 +34,14 @@ public class Rules {
 		return (int) (size * exp);
 	}
 	
+	public static int hunt(int size, double exp, int maxFood) {
+		Random rand = new Random();
+		return (int) ((size + rand.nextInt(maxFood)) * exp);
+	}
+	
 	public static int hunt(int size, double exp) {
 		Random rand = new Random();
-		return (int) ((size + rand.nextInt(10)) * exp);
+		return (int) ((size + rand.nextInt(9)) * exp);
 	}
 
 }
